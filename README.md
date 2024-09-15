@@ -7,6 +7,14 @@
 
 ## Build instructions
 
+### for all platforms:
+
+update submodules to fetch `vcpkg`.
+
+```
+git submodule update --init --recursive
+```
+
 ### Windows
 
 I used both Visual Studio 2022 Preview and CLion (using MSVC) as IDE. The most comfortable option in
