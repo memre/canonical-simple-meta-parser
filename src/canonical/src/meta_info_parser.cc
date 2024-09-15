@@ -68,25 +68,38 @@ void meta_info_parser::_parse(std::string raw_json)
             return;
         }
 
-        auto products = json_[products_tag].items();
+        for (auto &[key, val]: json_[products_tag].items()) {
+            if (!val.contains(supported_tag) || !val[supported_tag].is_boolean() || !val.contains(arch_tag) ||
+                !val[arch_tag].is_string() || val[arch_tag].get<std::string>() != valid_arch)
+            {
+                continue;
+            }
 
-        auto valid_releases = products | ranges::views::filter([](const auto& item) {
-                                  const auto& val = item.value();
-                                  return val.contains(supported_tag) && val[supported_tag].is_boolean() &&
-                                         val.contains(arch_tag) && val[arch_tag].is_string() &&
-                                         val[arch_tag].get<std::string>() == valid_arch;
-                              }) |
-                              ranges::views::transform([](const auto& item) -> details::release {
-                                  const auto& val = item.value();
-                                  auto release_title = val[release_title_tag].get<std::string>();
-                                  auto version = val[version_tag].get<std::string>();
-                                  auto is_lts = _is_lts(release_title);
-                                  auto is_supported = val[supported_tag].get<bool>();
-                                  std::string sha256 = _get_sha(val["versions"]);
-                                  return details::release{release_title, version, is_lts, is_supported, sha256};
-                              });
-
-        releases_ = valid_releases | ranges::to<std::vector>();
+              auto release_title = val[release_title_tag].get<std::string>();
+              auto version = val[version_tag].get<std::string>();
+              auto is_lts = _is_lts(release_title);
+              auto is_supported = val[supported_tag].get<bool>();
+              std::string sha256 = _get_sha(val["versions"]);
+              releases_.push_back({release_title, version, is_lts, is_supported, sha256});
+        }
+//        auto products = json_[products_tag].items();
+//
+//        auto valid_releases = products | ranges::views::filter([](const auto&& item) {
+//                                  const auto& val = item.value();
+//                                  return val.contains(supported_tag) && val[supported_tag].is_boolean() &&
+//                                         val.contains(arch_tag) && val[arch_tag].is_string() &&
+//                                         val[arch_tag].get<std::string>() == valid_arch;
+//                              }) |
+//                              ranges::views::transform([](const auto&& item) -> details::release {
+//                                  const auto& val = item.value();
+//                                  auto release_title = val[release_title_tag].get<std::string>();
+//                                  auto version = val[version_tag].get<std::string>();
+//                                  auto is_lts = _is_lts(release_title);
+//                                  auto is_supported = val[supported_tag].get<bool>();
+//                                  std::string sha256 = _get_sha(val["versions"]);
+//                                  return details::release{release_title, version, is_lts, is_supported, sha256};
+//                              });
+//        releases_ = valid_releases | ranges::to<std::vector>();
     }
     catch (std::exception& e)
     {
