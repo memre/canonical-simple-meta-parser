@@ -13,20 +13,20 @@ else
 fi
 
 vcpkg="$VCPKG_ROOT/vcpkg"
-if [ -f "$VCPKG_EXE" ]; then
+if [ -f "$vcpkg" ]; then
     vcpkg install
 else
     echo "Error: vcpkg executable not found in $VCPKG_ROOT"
     exit 1
 fi
 
-BUILD_DIR="build"
-if [ ! -d "$BUILD_DIR" ]; then
-    mkdir "$BUILD_DIR"
+build_dir="build"
+if [ ! -d "$build_dir" ]; then
+    mkdir "$build_dir"
 fi
 
 (
-    cd "$BUILD_DIR"
+    cd "$build_dir"
     cmake ..
     cmake --build .
 

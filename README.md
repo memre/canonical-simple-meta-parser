@@ -67,5 +67,28 @@ PS C:\code\canonical-simple-meta-parser> .\build\src\cli\Debug\meta_fetcher.exe 
 image sha256 for 10.04 LTS: 983b7be9dd1ed8c0b3118e309cdd2b2869b74ddcbb3e4c6c4c77e28e0a7b5e59
 ```
 
-### Linux/Mac
+### Linux
 
+Similar to Windows, I crated a simple `build.sh` script to build whole application.
+Just execute it:
+
+```bash
+./build.sh
+
+# ... long vcpkg build logs
+
+
+```
+
+### Mac
+
+Same as Linux. I am using `brew` to install `cmake`, `clang-format` ... Assuming all dependencies are installed
+already.
+
+```bash
+./build.sh
+
+# ... long vcpkg build logs
+
+
+```
