@@ -104,10 +104,43 @@ image sha256 for 20.04 LTS: 266663b10f788f784a425873086051910084bc08c059bf8e4a94
 Same as Linux. I am using `brew` to install `cmake`, `clang-format` ... Assuming all dependencies are installed
 already.
 
+If you use CLion or any other IDE, export this variable: `CMAKE_OSX_ARCHITECTURES=x86_64`.
+
 ```bash
 ./build.sh
 
 # ... long vcpkg build logs
 
+❯ ./build/src/cli/meta_fetcher
+A tool to fetch Ubuntu cloud release info
+Usage:
+  meta_fetcher [OPTION...]
 
+  -l, --list               Return a list of all currently supported Ubuntu
+                           releases
+  -L, --lts                Return the current Ubuntu LTS version
+  -r, --release_title arg  Return the sha256 of disk1.img for a given
+                           Ubuntu release (default: "")
+  -h, --help               Print usage
+
+❯ ./build/src/cli/meta_fetcher
+A tool to fetch Ubuntu cloud release info
+Usage:
+  meta_fetcher [OPTION...]
+
+  -l, --list               Return a list of all currently supported Ubuntu
+                           releases
+  -L, --lts                Return the current Ubuntu LTS version
+  -r, --release_title arg  Return the sha256 of disk1.img for a given
+                           Ubuntu release (default: "")
+  -h, --help               Print usage
+
+❯ ./build/src/cli/meta_fetcher  -l
+Release: 20.04 LTS, Version: 20.04, LTS: true, sha256: 266663b10f788f784a425873086051910084bc08c059bf8e4a9490ce306f8d7e
+Release: 22.04 LTS, Version: 22.04, LTS: true, sha256: de5e632e17b8965f2baf4ea6d2b824788e154d9a65df4fd419ec4019898e15cd
+Release: 24.04 LTS, Version: 24.04, LTS: true, sha256: 32a9d30d18803da72f5936cf2b7b9efcb4d0bb63c67933f17e3bdfd1751de3f3
+❯ ./build/src/cli/meta_fetcher  -L
+Current LTS Release: 24.04 LTS, Version: 24.04
+❯ ./build/src/cli/meta_fetcher -r "20.04 LTS"
+image sha256 for 20.04 LTS: 266663b10f788f784a425873086051910084bc08c059bf8e4a9490ce306f8d7e
 ```

@@ -4,6 +4,10 @@ VCPKG_PATH='external/vcpkg'
 VCPKG_ROOT=$(realpath "$VCPKG_PATH")
 export PATH="$VCPKG_ROOT:$PATH"
 
+if [ x"`uname -s`" = x"Darwin" ]; then
+    export CMAKE_OSX_ARCHITECTURES=x86_64
+fi
+
 vcpkg_bootstrap="$VCPKG_ROOT/bootstrap-vcpkg.sh"
 if [ -f "$vcpkg_bootstrap" ]; then
     $vcpkg_bootstrap
